@@ -22,17 +22,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('spaces:read')]
+    #[Groups(['spaces:read', 'users:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups('spaces:read')]
+    #[Groups(['spaces:read', 'users:read'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups('users:read')]
     private array $roles = [];
 
     /**
@@ -42,32 +43,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('spaces:read')]
+    #[Groups(['spaces:read', 'users:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('spaces:read')]
+    #[Groups(['spaces:read', 'users:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column]
+    #[Groups('users:read')]
     private ?\DateTimeImmutable $birthdate = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('users:read')]
     private ?string $adress = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('users:read')]
     private ?string $postalcode = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('users:read')]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('users:read')]
     private ?string $country = null;
 
     /**
      * @var Collection<int, Space>
      */
     #[ORM\OneToMany(targetEntity: Space::class, mappedBy: 'owner')]
+    #[Groups('users:read')]
     private Collection $spaces;
 
     /**
