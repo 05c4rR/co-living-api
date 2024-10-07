@@ -7,6 +7,7 @@
 2. Les entités
 3. Les fixtures
 4. Les ressources
+5. Agrémenter le payload du token JWT
 
 ## RECUPERER ET INSTALLER LE PROJET
 
@@ -151,3 +152,9 @@ Vous pouvez modifier la réponse en ajustant les groupes de sérialisation dans 
 - ```/api/login``` Renvoie le token JWT
 - ```/api/spaces``` Renvoie plusieurs informations sur tous les espaces, leurs commodités, leur propriétaires, les chambres, ...
 - ```/api/users``` Renvoie des information sur les utilisateurs et l'uri de leurs espaces s'ils en possèdent.
+
+## AGREMENTER LE JETON JWT
+
+***JWTCreatedListener***
+Cet event listener utilise la classe JWTCreatedEvent du bundle Lexik.</br>
+Dans cette classe on peut ajouter des informations dans le token, comme le firstname et le lastname de l'User qui se connecte.</br>
