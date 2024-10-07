@@ -95,6 +95,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
     private Collection $reservations;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Groups('users:read')]
+    private ?Image $image = null;
+
     public function __construct()
     {
         $this->spaces = new ArrayCollection();
@@ -378,6 +382,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reservation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($image === null && $this->image !== null) {
+            $this->image->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($image !== null && $image->getUser() !== $this) {
+            $image->setUser($this);
+        }
+
+        $this->image = $image;
 
         return $this;
     }

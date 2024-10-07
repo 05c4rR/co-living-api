@@ -99,6 +99,14 @@ Cette entité possède:
 - liaison ManyToOne vers User -> $sender
 - liaison ManyToOne vers User -> $receiver
 
+***Image***
+Cette entité sert de banque pour les images. Elle contient:
+- id
+- filename
+- une liaison OneToOne vers User -> $user
+- une liaison ManyToOne vers Space -> $space
+- une liaison ManyToOne vers Room -> $room
+
 ## LES FIXTURES
 Pour augmenter ou baisser le nombre d'espaces et d'utilisateurs généré, modifier les constantes de la classe AppFixtures.
 ```php
@@ -118,12 +126,14 @@ Par défaut on génère 3 utilisateurs hors admin et 5 espaces. On peut égaleme
 ***Les users***
 Un seul admin est généré. Il s'appelle Admin Adminson, son **email** et ```admin@mail.com``` est **son mot de passe** c'est ```admin```.
 Pour tout autre user, les données seront générés aléatoirement grâce à l'API faker, mais leur **mot de passe** à tous est ```user```
+Tout les Users possède par défault une image de profile stockés dans le dossier public/uploads/images.</br>
 
 ***Les espaces***
 A la génération des espaces, un propriétaires est choisi aléatoirement parmis les Users qui ont reçu le role de propriétaire.</br>
 Chaque espace à 70% de chance de recevoir chaque feature. 
 Une a 3 chambre sont crée pour chaque espace.</br></br>
 Toutes ces valeurs peuvent être ajusté directement dans le code.</br>
+Tout les espaces et toutes les chambres récupèrent une image par défaut stockée dans le dossier public/upload/images.</br>
 Aucune review, reservation ou messages ne seront crée à la génération des fixtures.
 
 ## LES RESSOURCES

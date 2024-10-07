@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Features;
+use App\Entity\Image;
 use App\Entity\Room;
 use App\Entity\Space;
 use App\Entity\User;
@@ -58,6 +59,11 @@ class AppFixtures extends Fixture
             ->setPostalcode($faker->postcode())
             ->setRoles(['ROLE_ADMIN']);
         
+        $adminImage = new Image;
+        $adminImage->setFileName('default-user-profile.jpg');
+        $admin->setImage($adminImage);
+        
+        $manager->persist($adminImage);
         $manager->persist($admin);
 
         for($i = 0; $i < self::NB_USER; $i++) {
@@ -81,6 +87,11 @@ class AppFixtures extends Fixture
                 $owners[] = $user;
             }
 
+            $userImage = new Image;
+            $userImage->setFileName('default-user-profile.jpg');
+            $user->setImage($userImage);
+
+            $manager->persist($userImage);
             $manager->persist($user);
             $users[] = $user;
         }
@@ -104,6 +115,12 @@ class AppFixtures extends Fixture
                     }
                 }
 
+                $spaceImage = new Image;
+                $spaceImage->setFileName('default-space.jpg');
+                $space->addImage($spaceImage);
+
+                $manager->persist($spaceImage);
+
                 $roomNum = random_int(1, 3);
                 for ($j = 0; $j < $roomNum; $j++) {
                     $room = new Room;
@@ -111,6 +128,12 @@ class AppFixtures extends Fixture
                         ->setName($faker->word())
                         ->setPrice($faker->randomFloat(2, 35, 60))
                         ->setSpace($space);
+                    
+                    $roomImage = new Image;
+                    $roomImage->setFileName('default-room.jpg');
+                    $room->addImage($roomImage);
+
+                    $manager->persist($roomImage);
 
                     $space->addRoom($room);
                     $manager->persist($room);
