@@ -8,7 +8,8 @@ class JWTCreatedListener {
 
     public function onJWTCreated(JWTCreatedEvent $event)
     {   
-        /** @var User $user */
+
+        
         $user = $event->getUser();
 
         if (!$user instanceof User) {
@@ -18,6 +19,8 @@ class JWTCreatedListener {
         $payload = $event->getData();
         $payload['firstname'] = $user->getFirstname();
         $payload['lastname'] = $user->getLastname();
+        $payload['id'] = $user->getId();
+
     
         $event->setData($payload);
     

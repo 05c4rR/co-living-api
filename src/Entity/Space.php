@@ -19,10 +19,11 @@ class Space
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['spaces:read', 'messages:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('spaces:read')]
+    #[Groups(['spaces:read', 'messages:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -170,7 +171,7 @@ class Space
         return $this;
     }
 
-    public function getOwner(): ?user
+    public function getOwner(): ?User
     {
         return $this->owner;
     }

@@ -22,18 +22,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['spaces:read', 'users:read'])]
+    #[Groups(['spaces:read', 'users:read', 'messages:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups(['spaces:read', 'users:read'])]
+    #[Groups(['spaces:read', 'users:read', 'messages:read'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Groups('users:read')]
+    #[Groups(['spaces:read', 'users:read'])]
     private array $roles = [];
 
     /**
@@ -74,7 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Space>
      */
     #[ORM\OneToMany(targetEntity: Space::class, mappedBy: 'owner')]
-    #[Groups('users:read')]
+    #[Groups(['users:read'])]
     private Collection $spaces;
 
     /**
