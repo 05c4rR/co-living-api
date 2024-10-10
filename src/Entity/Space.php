@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ORM\Entity(repositoryClass: SpaceRepository::class)]
 #[ApiResource(
@@ -19,11 +20,11 @@ class Space
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['spaces:read', 'messages:read'])]
+    #[Groups(['spaces:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['spaces:read', 'messages:read'])]
+    #[Groups(['spaces:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -49,6 +50,7 @@ class Space
     #[ORM\ManyToOne(inversedBy: 'spaces')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups('spaces:read')]
+    #[MaxDepth(1)]
     private ?User $owner = null;
 
     /**
@@ -83,7 +85,6 @@ class Space
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'space')]
-    #[Groups('spaces:read')]
     private Collection $images;
 
     public function __construct()
@@ -176,7 +177,7 @@ class Space
         return $this->owner;
     }
 
-    public function setOwner(?user $owner): static
+    public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
 

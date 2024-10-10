@@ -19,7 +19,7 @@ class Image
     #[Groups('users:read')]
     private ?string $fileName = null;
 
-    #[ORM\OneToOne(inversedBy: 'space', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'image', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
